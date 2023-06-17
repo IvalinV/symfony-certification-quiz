@@ -1,0 +1,257 @@
+{
+    "category": "Automated tests", 
+    "questions": [
+      {
+        "question": "Using PHPUnit, which method names are used to share test setup code?", 
+        "help": "'https://www.w3resource.com/php/PHPUnit/fixtures.php'\n", 
+        "answers": [
+          {
+            "correct": true, 
+            "value": "setUp()"
+          }, 
+          {
+            "correct": false, 
+            "value": "__construct()"
+          }, 
+          {
+            "correct": false, 
+            "value": "shutdown()"
+          }, 
+          {
+            "correct": true, 
+            "value": "tearDown()"
+          }
+        ]
+      }, 
+      {
+        "question": "How to disable constructor when mocking an object?", 
+        "help": "'https://phpunit.de/manual/6.5/en/test-doubles.html#test-doubles.stubs.examples.StubTest2.php'\n", 
+        "answers": [
+          {
+            "correct": false, 
+            "value": "$this->getMock('My\\Class')->disableOriginalConstructor()->getMock()"
+          }, 
+          {
+            "correct": false, 
+            "value": "$this->disableOriginalConstructor('My\\Class')"
+          }, 
+          {
+            "correct": true, 
+            "value": "$this->getMockBuilder('My\\Class')->disableOriginalConstructor()->getMock()"
+          }, 
+          {
+            "correct": false, 
+            "value": "$this->getMockBuilder('My\\Class')->getMock()->disableConstructor()"
+          }
+        ]
+      }, 
+      {
+        "question": "Which Symfony class offers method to test commands?", 
+        "help": "'https://symfony.com/doc/current/console.html#testing-commands'\n", 
+        "answers": [
+          {
+            "correct": false, 
+            "value": "Symfony\\Component\\Console\\Tester\\Command"
+          }, 
+          {
+            "correct": true, 
+            "value": "Symfony\\Component\\Console\\Tester\\CommandTester"
+          }, 
+          {
+            "correct": false, 
+            "value": "Symfony\\Component\\Console\\Tester\\CommandUnitTester"
+          }, 
+          {
+            "correct": false, 
+            "value": "Symfony\\Component\\Console\\Tester\\CommandUnit"
+          }
+        ]
+      }, 
+      {
+        "question": "Using PHPUnit, which method allows to specify a mock response on second call?", 
+        "help": "'https://phpunit.de/manual/6.5/en/test-doubles.html'\n", 
+        "answers": [
+          {
+            "correct": true, 
+            "value": "$mock->expects($this->at(1))"
+          }, 
+          {
+            "correct": false, 
+            "value": "$mock->expects($this->at(2))"
+          }, 
+          {
+            "correct": false, 
+            "value": "$mock->expects($this->exactly(2))"
+          }, 
+          {
+            "correct": false, 
+            "value": "$mock->expects($this->on(2))"
+          }
+        ]
+      }, 
+      {
+        "question": "Using PHPUnit, which method allows you to expect an exception to be thrown?", 
+        "help": "'https://phpunit.de/manual/6.5/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.exceptions'\n", 
+        "answers": [
+          {
+            "correct": false, 
+            "value": "$this->setExpectedException('MyException')"
+          }, 
+          {
+            "correct": false, 
+            "value": "$this->setExceptionExpected('MyException')"
+          }, 
+          {
+            "correct": true, 
+            "value": "$this->expectException('MyException')"
+          }, 
+          {
+            "correct": false, 
+            "value": "$this->setExpected('MyException')"
+          }
+        ]
+      }, 
+      {
+        "question": "What command used for run all of your application tests by default?", 
+        "help": "'https://symfony.com/doc/current/testing.html#unit-tests'\n", 
+        "answers": [
+          {
+            "correct": false, 
+            "value": "phpunit -c app/"
+          }, 
+          {
+            "correct": false, 
+            "value": "phpunit app/"
+          }, 
+          {
+            "correct": false, 
+            "value": "phpunit -c"
+          }, 
+          {
+            "correct": true, 
+            "value": "phpunit"
+          }
+        ]
+      }, 
+      {
+        "question": "Where live functional tests in Symfony (inside a project structure)?", 
+        "help": "'https://symfony.com/doc/current/testing.html#your-first-functional-test'\n", 
+        "answers": [
+          {
+            "correct": false, 
+            "value": "Tests/"
+          }, 
+          {
+            "correct": true, 
+            "value": "Tests/Controller/"
+          }, 
+          {
+            "correct": false, 
+            "value": "Tests/Functional/"
+          }, 
+          {
+            "correct": false, 
+            "value": "Tests/Functional/Controller"
+          }, 
+          {
+            "correct": false, 
+            "value": "Tests/Functional/Controllers"
+          }, 
+          {
+            "correct": false, 
+            "value": "Tests/Controllers/"
+          }, 
+          {
+            "correct": false, 
+            "value": "Controller/"
+          }
+        ]
+      }, 
+      {
+        "question": "Using Symfony\\Component\\BrowserKit\\Client which of these methods can be called?", 
+        "help": "'https://github.com/symfony/browser-kit/blob/master/AbstractBrowser.php'\n", 
+        "answers": [
+          {
+            "correct": true, 
+            "value": "back()"
+          }, 
+          {
+            "correct": true, 
+            "value": "forward()"
+          }, 
+          {
+            "correct": true, 
+            "value": "insulate()"
+          }, 
+          {
+            "correct": true, 
+            "value": "restart()"
+          }, 
+          {
+            "correct": true, 
+            "value": "followRedirect()"
+          }, 
+          {
+            "correct": true, 
+            "value": "reload()"
+          }, 
+          {
+            "correct": false, 
+            "value": "next()"
+          }
+        ]
+      }, 
+      {
+        "question": "Using Swiftmailer, which of these configuration allows to disable email delivery?", 
+        "help": "'https://symfony.com/doc/current/email.html#disabling-sending'\n", 
+        "answers": [
+          {
+            "correct": true, 
+            "value": "swiftmailer.disable_delivery: true"
+          }, 
+          {
+            "correct": false, 
+            "value": "swiftmailer.delivery: false"
+          }, 
+          {
+            "correct": false, 
+            "value": "swiftmailer.delivery_disable: false"
+          }, 
+          {
+            "correct": false, 
+            "value": "framework.mailer.dsn: null://null"
+          }, 
+          {
+            "correct": false, 
+            "value": "framework.mailer.dsn: null"
+          }, 
+          {
+            "correct": false, 
+            "value": "framework.mailer.dsn: false"
+          }
+        ]
+      }, 
+      {
+        "question": "Using the Crawler client, how to follow a redirection ?", 
+        "help": "'followRedirects() is tricky as it will follow ALL redirections. https://symfony.com/doc/current/testing.html#redirecting'", 
+        "answers": [
+          {
+            "correct": false, 
+            "value": "$client->redirect()"
+          }, 
+          {
+            "correct": true, 
+            "value": "$client->followRedirect()"
+          }, 
+          {
+            "correct": true, 
+            "value": "$client->followRedirects()"
+          }, 
+          {
+            "correct": false, 
+            "value": "$client->redirectAll()"
+          }
+        ]
+      }
+    ]
+  }
