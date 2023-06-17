@@ -15,7 +15,18 @@
                 </ul>
             </div>
         </template>
-        <button class="btn btn-primary" @click="loadData('commands')">Next Category</button>
+        <button class="btn btn-primary" 
+            @click="loadData(state.current_category_id - 1)"
+            :disabled="state.current_category_id == state.categories[0].id"
+        >
+            Previous Category
+        </button>
+        <button class="btn btn-primary" 
+            @click="loadData(state.current_category_id + 1)"
+            :disabled="state.current_category_id == state.categories[state.categories.length - 1].id"
+        >
+            Next Category
+        </button>
     </div>
 </template>
 <script setup>
@@ -27,14 +38,45 @@
     });
 
     const state = ref({
-        data: {}
+        data: {},
+        categories: [
+            {
+                'id': 1,
+                'slug': 'architecture'
+            },
+            {
+                'id': 2,
+                'slug': 'command-line'
+            },
+            {
+                'id': 3,
+                'slug': 'config'
+            },
+            {
+                'id': 4,
+                'slug': 'dependancy-injection'
+            },
+            {
+                'id': 5,
+                'slug': 'http-cache'
+            },
+            {
+                'id': 6,
+                'slug': 'automated-tests'
+            },
+        ],
+        current_category_id: 1
     });
 
     onMounted(async () => {
-        loadData('architecture');
+        loadData();
     })
 
-    async function loadData(category){
+    async function loadData(id=null){
+        if(id !== null){
+            state.value.current_category_id = id;
+        }
+        let category = id !== null ? state.value.categories[id].slug: 'architecture';
         await axios.get(`/api/questions/topic/${category}`)
         .then(({data}) => {
             state.value.data = data;
