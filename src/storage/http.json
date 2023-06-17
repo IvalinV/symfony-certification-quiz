@@ -1,0 +1,168 @@
+{
+    "category": "HTTP Cache", 
+    "questions": [
+      {
+        "question": "What is the Twig function to render an ESI?", 
+        "help": "'https://symfony.com/doc/current/http_cache/esi.html'\n", 
+        "answers": [
+          {
+            "correct": false, 
+            "value": "cache_esi()"
+          }, 
+          {
+            "correct": false, 
+            "value": "esi_cache()"
+          }, 
+          {
+            "correct": false, 
+            "value": "esi_render()"
+          }, 
+          {
+            "correct": true, 
+            "value": "render_esi()"
+          }
+        ]
+      }, 
+      {
+        "question": "Which HTTP headers belongs to expiration cache model?", 
+        "help": "'https://symfony.com/doc/current/http_cache/expiration.html'\n", 
+        "answers": [
+          {
+            "correct": true, 
+            "value": "Expires"
+          }, 
+          {
+            "correct": false, 
+            "value": "Last-Modified"
+          }, 
+          {
+            "correct": false, 
+            "value": "ETag"
+          }, 
+          {
+            "correct": true, 
+            "value": "Cache-Control"
+          }, 
+          {
+            "correct": false, 
+            "value": "Cookie"
+          }
+        ]
+      }, 
+      {
+        "question": "Which HTTP headers belongs to validation cache model?", 
+        "help": "'https://symfony.com/doc/current/http_cache/validation.html'\n", 
+        "answers": [
+          {
+            "correct": false, 
+            "value": "Expires"
+          }, 
+          {
+            "correct": true, 
+            "value": "Last-Modified"
+          }, 
+          {
+            "correct": true, 
+            "value": "ETag"
+          }, 
+          {
+            "correct": false, 
+            "value": "Cache-Control"
+          }, 
+          {
+            "correct": false, 
+            "value": "Cookie"
+          }
+        ]
+      }, 
+      {
+        "question": "Which HTTP status code must be returned if the cache is still valid ?", 
+        "answers": [
+          {
+            "correct": true, 
+            "value": "304"
+          }, 
+          {
+            "correct": false, 
+            "value": "200"
+          }, 
+          {
+            "correct": false, 
+            "value": "202"
+          }, 
+          {
+            "correct": false, 
+            "value": "300"
+          }, 
+          {
+            "correct": false, 
+            "value": "305"
+          }
+        ]
+      }, 
+      {
+        "question": "True or False ? ESI need to be activated in configuration.", 
+        "help": "'https://symfony.com/doc/current/http_cache/esi.html'\n", 
+        "answers": [
+          {
+            "correct": true, 
+            "value": "True"
+          }, 
+          {
+            "correct": false, 
+            "value": "False"
+          }
+        ]
+      }, 
+      {
+        "question": "According to HTTP/1.1 what is the max value for Expires ?", 
+        "help": "https://symfony.com/doc/current/http_cache/expiration.html#expiration-with-the-expires-header", 
+        "answers": [
+          {
+            "correct": true, 
+            "value": "one year"
+          }, 
+          {
+            "correct": false, 
+            "value": "one month"
+          }, 
+          {
+            "correct": false, 
+            "value": "one week"
+          }, 
+          {
+            "correct": false, 
+            "value": "There is not limit"
+          }
+        ]
+      }, 
+      {
+        "question": "True or False ? You can use both validation and expiration within the same Response.", 
+        "help": "'https://symfony.com/doc/current/http_cache/expiration.html'\n", 
+        "answers": [
+          {
+            "correct": true, 
+            "value": "True"
+          }, 
+          {
+            "correct": false, 
+            "value": "False"
+          }
+        ]
+      }, 
+      {
+        "question": "True or False ? Using ETag saves CPU cycles.", 
+        "help": "'https://symfony.com/doc/current/http_cache/validation.html#validation-with-the-etag-header'", 
+        "answers": [
+          {
+            "correct": false, 
+            "value": "True"
+          }, 
+          {
+            "correct": true, 
+            "value": "False"
+          }
+        ]
+      }
+    ]
+  }
