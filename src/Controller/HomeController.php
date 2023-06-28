@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use Exception;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
@@ -27,6 +28,51 @@ class HomeController extends AbstractController
             return new JsonResponse([]);
         }
 
-        return new JsonResponse(json_decode($data));
+        $json_data = $this->addStyles(json_decode($data));
+        $json_data = $this->markMultiple($json_data);
+        $json_data = $this->addMarked($json_data);
+        
+        return new JsonResponse($json_data);
+    }
+
+    public function addStyles($data)
+    {
+        foreach ($data->questions as $question) {
+            foreach ($question->answers as $answer) {
+                $answer->style = $answer->correct ? 'color:green' : 'color:red';
+            }
+            $question->answered = false;
+        }
+
+        return $data;
+    }
+
+    public function markMultiple($data)
+    {
+        foreach ($data->questions as $item) {
+            $col = new ArrayCollection($item->answers);
+            $sorted = $col->filter(function ($answer) {
+                return $answer->correct;
+            });
+
+            if($sorted->count() > 1) {
+                $item->has_multiple_correct = true;
+            }
+
+            $item->has_multiple_correct = false;
+        }
+
+        return $data;
+    }
+
+    public function addMarked($data)
+    {
+        foreach ($data->questions as $question) {
+            foreach ($question->answers as $answer) {
+                $answer->marked = false;
+            }
+        }
+
+        return $data;
     }
 }

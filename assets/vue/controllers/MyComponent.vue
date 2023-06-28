@@ -5,11 +5,15 @@
             <h1>{{state.data.category}}</h1>
             <div v-for="(item, index) in state.data.questions" :key="index">
                 <p>{{item.question}}</p>
-                <ul style="list-style: none;" v-for="(answear, index) in item.answers" :key="index">
+                <ul style="list-style: none;" v-for="(answer, index) in item.answers" :key="index">
                     <li>
-                        <span>
-                            <input type="radio" name="answear" id="" @change="checkAnswear(answear.correct)">
-                            {{answear.value}}
+                        <span :style="[item.answered ? answer.style : '']">
+                            <input 
+                                :type="hasMultpleAnswers(item) ? 'checkbox':'radio'" 
+                                name="answer"
+                                @change="checkanswer(item, answer, $event)"
+                            >
+                            {{answer.value}}
                         </span>
                     </li>
                 </ul>
@@ -30,7 +34,7 @@
     </div>
 </template>
 <script setup>
-    import {onMounted, ref} from 'vue';
+    import {onMounted, computed, ref, toRaw} from 'vue';
     import axios from 'axios';
 
     defineProps({
@@ -65,8 +69,17 @@
                 'slug': 'automated-tests'
             },
         ],
-        current_category_id: 1
+        current_category_id: 1,
+        has_answered: false,
     });
+    
+    // a computed ref
+    function hasMultpleAnswers(item){
+       let multply = 
+            toRaw(state.value.data.questions)
+            .filter(q => q.answers.filter(a => a.correct).length > 1);
+        return multply.find(q => q.question === item.question);
+    }
 
     onMounted(async () => {
         loadData();
@@ -83,11 +96,28 @@
         })
     }
 
-    function checkAnswear(correct) {
-        if(correct){
-            alert('Correct!');
+    function checkanswer(question, answer, e) {
+        let marked_answers = getMarkedAnswers(question).length;
+        let correct_answers = getCorrectAnswers(question).length;
+
+        if(marked_answers <= correct_answers){
+            answer.marked = true;
         }else{
-            alert('Wrong!');
+            console.log('here')
+            e.preventDefault();
+            return;
         }
+
+        if(marked_answers == correct_answers){
+            question.answered = true;
+        }
+    }
+
+    function getCorrectAnswers(question){
+        return toRaw(question.answers).filter(a => a.correct);
+    }
+
+    function getMarkedAnswers(question){
+        return toRaw(question.answers).filter(a => a.marked);
     }
 </script>
