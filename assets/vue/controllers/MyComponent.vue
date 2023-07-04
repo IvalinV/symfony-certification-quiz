@@ -97,27 +97,20 @@
     }
 
     function checkanswer(question, answer, e) {
-        let marked_answers = getMarkedAnswers(question).length;
-        let correct_answers = getCorrectAnswers(question).length;
+        answer.marked = true;
 
-        if(marked_answers <= correct_answers){
-            answer.marked = true;
+        let marked_answers = getAnswers(question, 'marked').length;
+        let correct_answers = getAnswers(question, 'correct').length;
+        
+        if(marked_answers == correct_answers){
+            question.answered = true;
         }else{
-            console.log('here')
             e.preventDefault();
             return;
         }
-
-        if(marked_answers == correct_answers){
-            question.answered = true;
-        }
     }
 
-    function getCorrectAnswers(question){
-        return toRaw(question.answers).filter(a => a.correct);
-    }
-
-    function getMarkedAnswers(question){
-        return toRaw(question.answers).filter(a => a.marked);
+    function getAnswers(question, param){
+        return toRaw(question.answers).filter(a => a[param]);
     }
 </script>
