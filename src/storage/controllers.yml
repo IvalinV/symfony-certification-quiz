@@ -1,0 +1,85 @@
+category: Controllers
+questions:
+    -
+        question: 'How to perform a redirection on example.org in a controller?'
+        answers:
+            - {value: return $this->redirect($this->generateUrl('http://www.example.org')), correct: false}
+            - {value: return $this->redirectUrl('http://www.example.org'),                  correct: false}
+            - {value: return $this->redirect('http://www.example.org'),                     correct: true}
+            - {value: return $this->generateUrl('http://www.example.org'),                  correct: false}
+        help: |
+            'https://symfony.com/doc/current/controller.html#redirecting'
+    -
+        question: 'Which class may be extended by your controllers?'
+        answers:
+            - {value: Symfony\Bundle\FrameworkBundle\Controller\AbstractController,    correct: true}
+            - {value: Symfony\Component\FrameworkBundle\Controller\AbstractController, correct: false}
+            - {value: Symfony\Bundle\HttpBundle\Controller\AbstractController,         correct: false}
+            - {value: Symfony\Component\MvcBundle\Controller\AbstractController,       correct: false}
+        help: |
+            'https://symfony.com/doc/current/controller.html#the-base-controller-classes-services'
+    -
+        question: 'Which of these annotations can be used in a controller?'
+        answers:
+            - {value: '@Cache',          correct: true}
+            - {value: '@ParamConverter', correct: true}
+            - {value: '@Security',       correct: true}
+            - {value: '@Template',       correct: true}
+            - {value: '@Method',         correct: false}
+            - {value: '@Post',           correct: false}
+            - {value: '@CatchException',           correct: false}
+        help: |
+            'https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html#annotations-for-controllers'
+    -
+        question: 'Which of these response objects does not exists?'
+        answers:
+            - {value: XmlResponse,        correct: true}
+            - {value: FileResponse,        correct: true}
+            - {value: TwigResponse,        correct: true}
+            - {value: JsonResponse,       correct: false}
+            - {value: BinaryFileResponse, correct: false}
+            - {value: RedirectResponse,   correct: false}
+            - {value: StreamedResponse,   correct: false}
+        help: |
+            'https://symfony.com/doc/current/components/http_foundation.html#response'
+    -
+        question: 'Which class will you use to convert an action parameter?'
+        answers:
+            - {value: Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,     correct: true}
+            - {value: Sensio\Bundle\FrameworkExtraBundle\Controller\ParamConverter, correct: false}
+            - {value: Symfony\Bundle\FrameworkBundle\Configuration\ParamConverter,          correct: false}
+            - {value: Symfony\Bundle\FrameworkBundle\Controller\ParamConverter,    correct: false}
+        help: |
+            'https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html'
+    -
+        question: 'Which controller/action allows to render a template without a specific controller?'
+        answers:
+            - {value: Symfony\Bundle\FrameworkBundle\Controller\TemplateController, correct: true}
+            - {value: Sensio\Bundle\FrameworkExtraBundle\Controller\TemplateController,     correct: false}
+            - {value: Symfony\Bundle\FrameworkBundle\Controller\TwigController,     correct: false}
+            - {value: Sensio\Bundle\FrameworkExtraBundle\Controller\TwigController,   correct: false}
+        help: |
+            'https://symfony.com/doc/current/templates.html#rendering-a-template-directly-from-a-route'
+    -
+        question: |
+            According to this action :
+
+            /**
+             * @Route("/comment/{postSlug}/new", name = "comment_new")
+             *
+             */
+            public function newAction(Request $request, Post $post)
+            {
+                // ...
+            }
+
+
+            How my ParamConverter should be configured to match "postSlug" params with "slug" in Post ?
+        answers:
+            - {value: '@ParamConverter("post", options={"mapping": {"postSlug": "slug"}})', correct: true}
+            - {value: '@ParamConverter("post", options={"mapping": {"slug": "postSlug"}})', correct: false}
+            - {value: '@ParamConverter("post", options={"mapping": {"field": "slug"}})', correct: false}
+            - {value: '@ParamConverter("post", options={"mapping": {"Post": "slug"}})', correct: false}
+            - {value: 'It is not possible, params and fields must match', correct: false}
+        help: |
+            'https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html#doctrineconverter-options'
