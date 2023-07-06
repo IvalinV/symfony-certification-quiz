@@ -21,13 +21,13 @@
         </template>
         <button class="btn btn-primary" 
             @click="loadData(state.current_category_id - 1)"
-            :disabled="state.current_category_id == state.categories[0].id"
+            :disabled="state.current_category_id == categories[0].id"
         >
             Previous Category
         </button>
         <button class="btn btn-primary" 
             @click="loadData(state.current_category_id + 1)"
-            :disabled="state.current_category_id == state.categories[state.categories.length - 1].id"
+            :disabled="state.current_category_id == categories[categories.length - 1].id"
         >
             Next Category
         </button>
@@ -37,38 +37,12 @@
     import {onMounted, computed, ref, toRaw} from 'vue';
     import axios from 'axios';
 
-    defineProps({
-        name: String,
+    const props = defineProps({
+        categories: Array
     });
 
     const state = ref({
         data: {},
-        categories: [
-            {
-                'id': 1,
-                'slug': 'architecture'
-            },
-            {
-                'id': 2,
-                'slug': 'command-line'
-            },
-            {
-                'id': 3,
-                'slug': 'config'
-            },
-            {
-                'id': 4,
-                'slug': 'dependancy-injection'
-            },
-            {
-                'id': 5,
-                'slug': 'http-cache'
-            },
-            {
-                'id': 6,
-                'slug': 'automated-tests'
-            },
-        ],
         current_category_id: 1,
         has_answered: false,
     });
@@ -82,6 +56,7 @@
     }
 
     onMounted(async () => {
+        console.log(props.categories[0].id)
         loadData();
     })
 
@@ -89,7 +64,7 @@
         if(id !== null){
             state.value.current_category_id = id;
         }
-        let category = id !== null ? state.value.categories[id].slug: 'architecture';
+        let category = id !== null ? props.categories[id].slug: 'architecture';
         await axios.get(`/api/questions/topic/${category}`)
         .then(({data}) => {
             state.value.data = data;

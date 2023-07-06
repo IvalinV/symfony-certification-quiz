@@ -2,20 +2,28 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
+use App\Entity\Question;
 use Exception;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class HomeController extends AbstractController
 {
     #[Route('/home', name: 'app_home')]
-    public function index()
+    public function index(EntityManagerInterface $entityManager)
     {
         return $this->render('home.html.twig', [
-            'fullName' => 'Ivalin Venkov',
+            'categories' => $this->serialize($entityManager->getRepository(Category::class)->findAll())
         ]);
     }
 
@@ -23,16 +31,12 @@ class HomeController extends AbstractController
     public function getQuestions($name): JsonResponse
     {
         try {
-            $data = file_get_contents("../src/storage/{$name}.json");
+            $data = Yaml::parse(file_get_contents("../src/storage/{$name}.yml"));
         } catch (Exception $e) {
             return new JsonResponse([]);
         }
 
-        $json_data = $this->addStyles(json_decode($data));
-        $json_data = $this->markMultiple($json_data);
-        $json_data = $this->addMarked($json_data);
-        
-        return new JsonResponse($json_data);
+        return new JsonResponse($data);
     }
 
     public function addStyles($data)
@@ -74,5 +78,22 @@ class HomeController extends AbstractController
         }
 
         return $data;
+    }
+
+    /**
+     * Serialize entitties
+     *
+     * Entities should be serialize in order to be passed to the Vue 3 component.
+     *
+     * @param Array $data Doctrine Entities
+     * @return Serializer
+     **/
+    public function serialize($data)
+    {
+        $encoder = new JsonEncoder();
+        $normalizer = new ObjectNormalizer();
+        $serializer = new Serializer(array($normalizer), array($encoder));
+
+       return $serializer->serialize($data, 'json');
     }
 }
