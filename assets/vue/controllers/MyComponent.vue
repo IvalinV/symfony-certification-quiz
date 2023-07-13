@@ -56,7 +56,6 @@
     }
 
     onMounted(async () => {
-        console.log(props.categories[0].id)
         loadData();
     })
 
@@ -76,6 +75,7 @@
 
         let marked_answers = getAnswers(question, 'marked').length;
         let correct_answers = getAnswers(question, 'correct').length;
+        console.log(marked_answers)
         
         if(marked_answers == correct_answers){
             question.answered = true;

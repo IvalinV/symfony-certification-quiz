@@ -20,18 +20,31 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /**
+     * @Groups("main")
+    */
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    
+    /**
+     * @Groups("main")
+     */
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Question::class)]
     private Collection $questions;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Groups("main")
+     */
     private ?string $slug = null;
 
     #[ORM\Column]
+    /**
+     * @Groups("main")
+     */
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()

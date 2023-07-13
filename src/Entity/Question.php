@@ -25,10 +25,10 @@ class Question
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 1024)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 512)]
     private ?string $help = null;
 
     #[ORM\ManyToOne(inversedBy: 'questions')]

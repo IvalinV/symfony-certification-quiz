@@ -31,6 +31,7 @@ class HomeController extends AbstractController
     public function getQuestions($name): JsonResponse
     {
         try {
+            // TODO: Retrieve those from the DB
             $data = Yaml::parse(file_get_contents("../src/storage/{$name}.yml"));
         } catch (Exception $e) {
             return new JsonResponse([]);
@@ -93,7 +94,11 @@ class HomeController extends AbstractController
         $encoder = new JsonEncoder();
         $normalizer = new ObjectNormalizer();
         $serializer = new Serializer(array($normalizer), array($encoder));
-
-       return $serializer->serialize($data, 'json');
+        
+       return $serializer->serialize($data, 'json', [
+            'circular_reference_handler' => function($object){
+                return $object->getId();
+            }
+       ]);
     }
 }

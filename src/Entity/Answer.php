@@ -20,7 +20,7 @@ class Answer
     #[ORM\Column]
     private ?bool $correct = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 512)]
     private ?string $value = null;
 
     #[ORM\Column]

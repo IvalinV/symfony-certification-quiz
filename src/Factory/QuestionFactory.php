@@ -51,6 +51,7 @@ final class QuestionFactory extends ModelFactory
             'description' => self::faker()->text(255),
             'hasMultipleCorrect' => self::faker()->boolean(),
             'help' => self::faker()->text(255),
+            'createdAt' => self::faker()->dateTime(),
         ];
     }
 
