@@ -19,7 +19,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
+    #[Route('topic/symfony', name: 'symfony')]
     public function index(EntityManagerInterface $entityManager)
     {
         return $this->render('home.html.twig', [
@@ -28,16 +28,15 @@ class HomeController extends AbstractController
     }
 
     #[Route('/api/questions/topic/{name}', name: 'get_topic_question')]
-    public function getQuestions($name): JsonResponse
+    public function getQuestions($name, EntityManagerInterface $entityManager): JsonResponse
     {
         try {
-            // TODO: Retrieve those from the DB
-            $data = Yaml::parse(file_get_contents("../src/storage/{$name}.yml"));
+            $category = $entityManager->getRepository(Category::class)->findOneBy(['slug' => $name]);
         } catch (Exception $e) {
             return new JsonResponse([]);
         }
 
-        return new JsonResponse($data);
+        return new JsonResponse(json_decode($this->serialize($category)));
     }
 
     public function addStyles($data)
@@ -94,11 +93,11 @@ class HomeController extends AbstractController
         $encoder = new JsonEncoder();
         $normalizer = new ObjectNormalizer();
         $serializer = new Serializer(array($normalizer), array($encoder));
-        
-       return $serializer->serialize($data, 'json', [
-            'circular_reference_handler' => function($object){
-                return $object->getId();
-            }
-       ]);
+
+        return $serializer->serialize($data, 'json', [
+             'circular_reference_handler' => function ($object) {
+                 return $object->getId();
+             }
+        ]);
     }
 }

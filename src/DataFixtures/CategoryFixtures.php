@@ -2,26 +2,28 @@
 
 namespace App\DataFixtures;
 
+use DateTimeImmutable;
 use App\Entity\Answer;
 use App\Entity\Category;
 use App\Entity\Question;
-use App\Factory\CategoryFactory;
-use App\Factory\QuestionFactory;
-use DateTimeImmutable;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Yaml\Yaml;
+use App\Factory\CategoryFactory;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class CategoryFixtures extends Fixture
 {
+    /**
+     * Undocumented function
+     *
+     * @param ObjectManager $manager
+     * @return void
+     */
     public function load(ObjectManager $manager): void
     {
-        /**
-         * Create questions for each category.
-         */
         $categories = $this->getCategories();
-        
+
         foreach ($categories as $category) {
             CategoryFactory::createOne($category, $manager);
             $this->seedQuestions($category, $manager);
@@ -29,14 +31,12 @@ class CategoryFixtures extends Fixture
     }
 
     /**
-     * undocumented function summary
+     * Undocumented function
      *
-     * Undocumented function long description
-     *
-     * @param Type $var Description
-     * @return type
-     * @throws conditon
-     **/
+     * @param array $category
+     * @param ObjectManager $manager
+     * @return void
+     */
     public function seedQuestions($category, $manager)
     {
         $slug = $category['slug'];
@@ -45,24 +45,27 @@ class CategoryFixtures extends Fixture
         foreach ($data['questions'] as $question) {
             $record = new Question();
             $category = $manager->getRepository(Category::class)->findOneBy(['slug' => $slug]);
-
-            $record->setCategory($category);
+            preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $question['help'], $match);
             
+            $url = $match[0];
+            
+            $record->setCategory($category);
+
             $record->setDescription($question['question']);
-            $record->setHelp($question['help'] ?? '');
+            $record->setHelp($url ?? '');
             $record->setHasMultipleCorrect(false);
             $record->setAnswered(false);
             $record->setCreatedAt(new DateTimeImmutable());
-            
+
             $manager->persist($record);
             $manager->flush();
-            
+
             $this->seedAnswers($record, $question, $manager);
         }
     }
 
 
-        /**
+    /**
      * undocumented function summary
      *
      * Undocumented function long description
@@ -77,7 +80,7 @@ class CategoryFixtures extends Fixture
             $record = new Answer();
 
             $record->setQuestion($question_record);
-            
+
             $record->setCorrect($answer['correct']);
             $record->setValue($answer['value']);
             $record->setMarked(false);
