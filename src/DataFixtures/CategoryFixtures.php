@@ -2,12 +2,12 @@
 
 namespace App\DataFixtures;
 
-use DateTimeImmutable;
 use App\Entity\Answer;
+use DateTimeImmutable;
 use App\Entity\Category;
 use App\Entity\Question;
-use Symfony\Component\Yaml\Yaml;
 use App\Factory\CategoryFactory;
+use Symfony\Component\Yaml\Yaml;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\AsciiSlugger;
@@ -15,7 +15,7 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 class CategoryFixtures extends Fixture
 {
     /**
-     * Undocumented function
+     * Load fixture data
      *
      * @param ObjectManager $manager
      * @return void
@@ -31,7 +31,7 @@ class CategoryFixtures extends Fixture
     }
 
     /**
-     * Undocumented function
+     * Seed all categories with the coresponding questions
      *
      * @param array $category
      * @param ObjectManager $manager
@@ -66,14 +66,13 @@ class CategoryFixtures extends Fixture
 
 
     /**
-     * undocumented function summary
+     * Seed all questions with the coresponding answers
      *
-     * Undocumented function long description
-     *
-     * @param Type $var Description
-     * @return type
-     * @throws conditon
-     **/
+     * @param Question $question_record
+     * @param array $question
+     * @param ObjectManager $manager
+     * @return void
+     */
     public function seedAnswers($question_record, $question, $manager)
     {
         foreach ($question['answers'] as $answer) {
@@ -92,14 +91,10 @@ class CategoryFixtures extends Fixture
     }
 
     /**
-     * undocumented function summary
+     * Get categories array
      *
-     * Undocumented function long description
-     *
-     * @param Type $var Description
-     * @return type
-     * @throws conditon
-     **/
+     * @return array $categories
+     */
     public function getCategories()
     {
         $slugger = new AsciiSlugger();

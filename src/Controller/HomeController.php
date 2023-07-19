@@ -2,20 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
-use App\Entity\Question;
 use Exception;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\Yaml\Yaml;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
@@ -27,7 +22,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/api/questions/topic/{name}', name: 'get_topic_question')]
+    #[Route('/api/questions/topic/symfony/category/{name}', name: 'get_topic_question')]
     public function getQuestions($name, EntityManagerInterface $entityManager): JsonResponse
     {
         try {
@@ -37,47 +32,6 @@ class HomeController extends AbstractController
         }
 
         return new JsonResponse(json_decode($this->serialize($category)));
-    }
-
-    public function addStyles($data)
-    {
-        foreach ($data->questions as $question) {
-            foreach ($question->answers as $answer) {
-                $answer->style = $answer->correct ? 'color:green' : 'color:red';
-            }
-            $question->answered = false;
-        }
-
-        return $data;
-    }
-
-    public function markMultiple($data)
-    {
-        foreach ($data->questions as $item) {
-            $col = new ArrayCollection($item->answers);
-            $sorted = $col->filter(function ($answer) {
-                return $answer->correct;
-            });
-
-            if($sorted->count() > 1) {
-                $item->has_multiple_correct = true;
-            }
-
-            $item->has_multiple_correct = false;
-        }
-
-        return $data;
-    }
-
-    public function addMarked($data)
-    {
-        foreach ($data->questions as $question) {
-            foreach ($question->answers as $answer) {
-                $answer->marked = false;
-            }
-        }
-
-        return $data;
     }
 
     /**
