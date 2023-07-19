@@ -16,6 +16,7 @@
                                 :type="hasMultpleAnswers(item) ? 'checkbox':'radio'" 
                                 name="answer"
                                 @change="checkanswer(item, answer, $event)"
+                                ref="inputRefs"
                             >
                             {{answer.value}}
                         </span>
@@ -51,6 +52,8 @@
         has_answered: false,
         correct_answers_given: []
     });
+
+    const inputRefs = ref(null)
     
     // a computed ref
     function hasMultpleAnswers(item){
@@ -66,6 +69,7 @@
     })
 
     async function loadData(id=null){
+        resetCheckboxes();
         if(Object.keys(state.value.data).length){
             if(checkAnsweredQuestions()){
                 confirm(`You gave ${state.value.correct_answers_given.length} correct answers`);
@@ -81,7 +85,7 @@
 
         let category = id !== null ? props.categories[id].slug: 'architecture';
         
-        await axios.get(`/api/questions/topic/${category}`)
+        await axios.get(`/api/questions/topic/symfony/category/${category}`)
         .then(({data}) => {
             state.value.data = data;
             state.value.correct_answers_given = [];
@@ -129,5 +133,13 @@
         }else{
             return false;
         }
+    }
+
+    function resetCheckboxes(){
+        if(inputRefs.value === null) return;
+
+        inputRefs.value.forEach(element => {
+            element.checked = false;
+        });
     }
 </script>
