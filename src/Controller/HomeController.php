@@ -31,7 +31,7 @@ class HomeController extends AbstractController
             return new JsonResponse([]);
         }
 
-        return new JsonResponse(json_decode($this->serialize($category)));
+        return new JsonResponse(json_decode((string)$this->serialize($category)));
     }
 
     /**

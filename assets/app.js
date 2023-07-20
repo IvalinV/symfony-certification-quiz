@@ -13,9 +13,9 @@ import './bootstrap';
 
 
 import { createApp, ref } from 'vue'
-import MyComponent from '/assets/vue/controllers/MyComponent.vue';
+import ContentComponent from '/assets/vue/controllers/ContentComponent.vue';
 
 createApp({
-    components: {MyComponent}
+    components: {ContentComponent}
 }).mount('#app')
 
