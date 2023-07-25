@@ -46,13 +46,13 @@ class CategoryFixtures extends Fixture
             $record = new Question();
             $category = $manager->getRepository(Category::class)->findOneBy(['slug' => $slug]);
             preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $question['help'], $match);
-            
+
             $url = $match[0];
-            
+
             $record->setCategory($category);
 
             $record->setDescription($question['question']);
-            $record->setHelp($url ?? '');
+            $record->setHelp($url[0] ?? '');
             $record->setHasMultipleCorrect(false);
             $record->setAnswered(false);
             $record->setCreatedAt(new DateTimeImmutable());
