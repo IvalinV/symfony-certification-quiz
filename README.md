@@ -5,11 +5,11 @@
  - PHP ^8.0
 
 ## Installation
-`composer install`
-`npm install`
-`npm run prod`
-`bin/console doctrine:migrations:migrate`
-`bin/console doctrine:fixtures:load`
+- `composer install`
+- `npm install`
+- `npm run prod`
+- `bin/console doctrine:migrations:migrate`
+- `bin/console doctrine:fixtures:load`
 
 
 ## Getting started
