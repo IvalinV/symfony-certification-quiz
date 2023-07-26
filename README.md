@@ -15,7 +15,7 @@
 ## Getting started
 `symfony serve -d` to run the server as deamon alternativly you can use `symfony serve`
 
-*** if you run into some problems regarding the memoery limit, be sure to change `memory_limit` for both `CLI` and `fpm` to `-1` ***
+***if you run into some problems regarding the memoery limit, be sure to change `memory_limit` for both `CLI` and `fpm` to `-1`***
 ## Ideas for a future development
 
 - Web iterface from which a new `yml` files can be uploaded containing information about the categories, questions and answers
