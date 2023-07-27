@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 #[ORM\Table(name: 'questions')]
@@ -20,29 +21,36 @@ use ApiPlatform\Metadata\GetCollection;
 
 class Question
 {
+    #[Groups(['group1'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['group1'])]
     #[ORM\Column(length: 1024)]
     private ?string $description = null;
 
+    #[Groups(['group1'])]
     #[ORM\Column(length: 512)]
     private ?string $help = null;
 
     #[ORM\ManyToOne(inversedBy: 'questions')]
     private ?Category $category = null;
 
+    #[Groups(['group1'])]
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: Answer::class)]
     private Collection $answers;
 
+    #[Groups(['group1'])]
     #[ORM\Column]
     private ?bool $answered = null;
 
+    #[Groups(['group1'])]
     #[ORM\Column]
     private ?bool $hasMultipleCorrect = null;
 
+    #[Groups(['group1'])]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 

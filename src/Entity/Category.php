@@ -17,34 +17,27 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 class Category
 {
+    #[Groups(['group1'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    /**
-     * @Groups("main")
-    */
-    private ?int $id = null;
 
+    private ?int $id = null;
+    #[Groups(['group1'])]
     #[ORM\Column(length: 255)]
     
-    /**
-     * @Groups("main")
-     */
     private ?string $name = null;
-
+    
+    #[Groups(['group1'])]
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Question::class)]
     private Collection $questions;
 
+    #[Groups(['group1'])]
     #[ORM\Column(length: 255)]
-    /**
-     * @Groups("main")
-     */
     private ?string $slug = null;
 
+    #[Groups(['group1'])]
     #[ORM\Column]
-    /**
-     * @Groups("main")
-     */
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()

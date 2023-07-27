@@ -30,8 +30,8 @@ class HomeController extends AbstractController
         } catch (Exception $e) {
             return new JsonResponse([]);
         }
-
-        return new JsonResponse(json_decode((string)$this->serialize($category)));
+        return $this->json($category, 200, [], ['groups' =>['group1']]);
+        // return new JsonResponse(json_decode((string)$this->serialize($category)));
     }
 
     /**
@@ -50,7 +50,7 @@ class HomeController extends AbstractController
 
         return $serializer->serialize($data, 'json', [
              'circular_reference_handler' => function ($object) {
-                 return $object->getId();
+                return $object->getId();
              }
         ]);
     }
