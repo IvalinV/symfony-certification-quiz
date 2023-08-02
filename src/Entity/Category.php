@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
+use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -25,9 +23,9 @@ class Category
     private ?int $id = null;
     #[Groups(['group1'])]
     #[ORM\Column(length: 255)]
-    
+
     private ?string $name = null;
-    
+
     #[Groups(['group1'])]
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Question::class)]
     private Collection $questions;
