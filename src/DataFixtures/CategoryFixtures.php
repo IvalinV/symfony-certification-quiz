@@ -45,7 +45,7 @@ class CategoryFixtures extends Fixture
         foreach ($data['questions'] as $question) {
             $record = new Question();
             $category = $manager->getRepository(Category::class)->findOneBy(['slug' => $slug]);
-            preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $question['help'], $match);
+            preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $question['help'] ?? '', $match);
 
             $url = $match[0];
 
